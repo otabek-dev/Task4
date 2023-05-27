@@ -125,6 +125,9 @@ namespace WebAppTask4.Areas.Identity.Pages.Account
                 var user = CreateUser();
 
                 user.FirstName = Input.FirstName;
+                user.RegistrationTime = DateTime.Now;
+                user.LastLoginTime = DateTime.Now;
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

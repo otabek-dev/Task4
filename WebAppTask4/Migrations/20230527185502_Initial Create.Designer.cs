@@ -11,7 +11,7 @@ using WebAppTask4.Data;
 
 namespace WebAppTask4.Migrations
 {
-    [DbContext(typeof(AuthDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20230527185502_Initial Create")]
     partial class InitialCreate
     {

@@ -5,12 +5,13 @@ using WebAppTask4.Areas.Identity.Data;
 
 namespace WebAppTask4.Data;
 
-public class AuthDbContext : IdentityDbContext<AppUser>
+public class AppDbContext : IdentityDbContext<AppUser>
 {
-    public AuthDbContext(DbContextOptions<AuthDbContext> options)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }
+    public DbSet<AppUser> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
