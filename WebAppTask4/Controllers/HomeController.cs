@@ -1,20 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WebAppTask4.Areas.Identity.Data;
 using WebAppTask4.Models;
 
 namespace WebAppTask4.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<AppUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager)
         {
-            _logger = logger;
+            this._logger = logger;
+            this._userManager = userManager;
         }
 
         public IActionResult Index()
         {
+            ViewData["UserID"] = _userManager.GetUserId(this.User);
             return View();
         }
 

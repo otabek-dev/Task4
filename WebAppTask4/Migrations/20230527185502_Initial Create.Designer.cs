@@ -12,7 +12,7 @@ using WebAppTask4.Data;
 namespace WebAppTask4.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230527135225_Initial Create")]
+    [Migration("20230527185502_Initial Create")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -185,6 +185,12 @@ namespace WebAppTask4.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastLoginTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -207,6 +213,9 @@ namespace WebAppTask4.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("RegistrationTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
