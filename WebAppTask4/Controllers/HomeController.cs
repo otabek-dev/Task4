@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebAppTask4.Areas.Identity.Data;
+using WebAppTask4.Attributes;
 using WebAppTask4.Data;
 using WebAppTask4.Models;
 
@@ -12,18 +14,31 @@ namespace WebAppTask4.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext _context;
-
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        //ILogger<HomeController> logger, AppDbContext context, 
+        
+        public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
-            this._logger = logger;
-            this._context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
         {
-            var users = _context.Users.ToList();
+            var user = _userManager.GetUserAsync(User).Result;
+
+            // Проверить, существует ли пользователь в базе данных
+            if (user == null)
+            {
+                // Закрыть сессию
+                _signInManager.SignOutAsync().Wait();
+
+                // Перенаправить на страницу логина или другую нужную страницу
+                return Redirect("/Identity/Account/Login"); ;
+            }
+                
+            var users = _userManager.Users.ToList();
             return View(users);
         }
 

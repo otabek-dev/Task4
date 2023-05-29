@@ -1,16 +1,16 @@
 $(document).ready(function () {
     let selectedRowData = [];
-
-    $('#selectAll').change(function () {
+    //.prop('checked', $(this).prop('checked'));
+    $('#selectAll').click(function () {
         $('.userCheckbox').prop('checked', $(this).prop('checked'));
     });
 
     $('.userCheckbox').change(function () {
         if ($("input.userCheckbox:checked").length == $("input.userCheckbox").length) {
-            $('#selectAll').attr('checked', 'checked');
+            $('#selectAll').prop('checked', $(this).prop('checked'));
         }
         else {
-            $('#selectAll').removeAttr('checked');
+            $('#selectAll').prop('checked', false);
         }
     });
 

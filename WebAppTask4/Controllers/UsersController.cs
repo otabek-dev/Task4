@@ -35,13 +35,13 @@ namespace Task4App.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public int[] Post([FromBody] int[] value)
+        public Guid[] Post([FromBody] Guid[] value)
         {
             return value;
         }
 
         [HttpDelete]
-        public async Task Delete([FromBody] Guid[] guids)
+        public async Task Delete([FromBody] string[] guids)
         {
             foreach (var guid in guids)
             {

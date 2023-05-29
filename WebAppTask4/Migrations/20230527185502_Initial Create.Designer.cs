@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using WebAppTask4.Areas.Identity.Data;
 using WebAppTask4.Data;
 
 #nullable disable
 
 namespace WebAppTask4.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(AppUser))]
     [Migration("20230527185502_Initial Create")]
     partial class InitialCreate
     {
