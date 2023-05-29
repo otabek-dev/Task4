@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using WebAppTask4.Areas.Identity.Data;
 using WebAppTask4.Attributes;
 using WebAppTask4.Data;
@@ -16,7 +17,6 @@ namespace WebAppTask4.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        //ILogger<HomeController> logger, AppDbContext context, 
         
         public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
@@ -28,16 +28,18 @@ namespace WebAppTask4.Controllers
         {
             var user = _userManager.GetUserAsync(User).Result;
 
-            // Проверить, существует ли пользователь в базе данных
             if (user == null)
             {
-                // Закрыть сессию
                 _signInManager.SignOutAsync().Wait();
-
-                // Перенаправить на страницу логина или другую нужную страницу
-                return Redirect("/Identity/Account/Login"); ;
+                return Redirect("/Identity/Account/Login");
             }
-                
+            else if (!user.IsActive)
+            {
+                _signInManager.SignOutAsync().Wait();
+                return Redirect("/Identity/Account/Login");
+            }
+
+            user.LastLoginTime = DateTime.UtcNow;
             var users = _userManager.Users.ToList();
             return View(users);
         }

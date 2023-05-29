@@ -33,11 +33,47 @@ namespace Task4App.Controllers
             return null;
         }
 
-        // POST api/<UsersController>
+        //// POST api/<UsersController>
+        //[HttpPost]
+        //public Guid[] Post([FromBody] Guid[] value)
+        //{
+        //    return value;
+        //}
+
         [HttpPost]
-        public Guid[] Post([FromBody] Guid[] value)
+        [Route("Block")]
+        public async Task<IActionResult> Block([FromBody] string[] guids)
         {
-            return value;
+            foreach (var guid in guids)
+            {
+                var deleteUser = await _context.Users.FindAsync(guid);
+                
+                if (deleteUser != null)
+                {
+                    deleteUser.IsActive = false;
+                }
+            }
+            
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("UnBlock")]
+        public async Task<IActionResult> UnBlock([FromBody] string[] guids)
+        {
+            foreach (var guid in guids)
+            {
+                var deleteUser = await _context.Users.FindAsync(guid);
+
+                if (deleteUser != null)
+                {
+                    deleteUser.IsActive = true;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpDelete]
@@ -50,9 +86,9 @@ namespace Task4App.Controllers
                 if (deleteUser != null)
                 {
                     _context.Users.Remove(deleteUser);
-                    await _context.SaveChangesAsync();
                 }
             }
+            await _context.SaveChangesAsync();
         }
     }
 }

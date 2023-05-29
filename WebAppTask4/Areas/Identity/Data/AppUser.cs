@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
@@ -19,6 +20,6 @@ public class AppUser : IdentityUser
 
     public DateTime LastLoginTime { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 }
 

@@ -14,6 +14,9 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddRazorPages();
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -41,6 +44,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllers();
 app.MapRazorPages();
 
 app.Run();
