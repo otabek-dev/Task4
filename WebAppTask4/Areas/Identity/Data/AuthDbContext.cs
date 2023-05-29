@@ -11,6 +11,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
         : base(options)
     {
     }
+
     public DbSet<AppUser> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
