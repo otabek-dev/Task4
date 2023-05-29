@@ -39,7 +39,6 @@ namespace WebAppTask4.Controllers
                 return Redirect("/Identity/Account/Login");
             }
 
-            user.LastLoginTime = DateTime.UtcNow;
             var users = _userManager.Users.ToList();
             return View(users);
         }
