@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAppTask4.Areas.Identity.Data;
-using WebAppTask4.Models;
+using WebAppTask4.Data;
 using WebAppTask4.Service;
 
 namespace Task4App.Controllers

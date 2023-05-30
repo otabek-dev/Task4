@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WebAppTask4.Areas.Identity.Data;
-using WebAppTask4.Models;
+using WebAppTask4.Data;
 using WebAppTask4.Models;
 
 namespace WebAppTask4.Controllers

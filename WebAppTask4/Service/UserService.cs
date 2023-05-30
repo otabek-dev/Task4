@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebAppTask4.Data;
 using WebAppTask4.Models;
 
 namespace WebAppTask4.Service

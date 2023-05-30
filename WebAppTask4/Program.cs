@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebAppTask4.Areas.Identity.Data;
-using WebAppTask4.Models;
+using WebAppTask4.Data;
 using WebAppTask4.Service;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") 
-    ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("OnlineDb") 
+    ?? throw new InvalidOperationException("Connection string 'OnlineDb' not found.");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
@@ -16,9 +16,9 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
+builder.Services.AddScoped<UserService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddRazorPages();
-builder.Services.AddScoped<UserService>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequiredLength = 1;
