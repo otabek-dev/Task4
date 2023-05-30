@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using WebAppTask4.Areas.Identity.Data;
-using WebAppTask4.Attributes;
-using WebAppTask4.Data;
+using WebAppTask4.Models;
 using WebAppTask4.Models;
 
 namespace WebAppTask4.Controllers
@@ -15,10 +14,10 @@ namespace WebAppTask4.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         
-        public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public HomeController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

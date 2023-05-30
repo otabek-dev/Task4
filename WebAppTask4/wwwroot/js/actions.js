@@ -1,6 +1,6 @@
 $(document).ready(function () {
     let selectedRowData = [];
-    //.prop('checked', $(this).prop('checked'));
+
     $('#selectAll').click(function () {
         $('.userCheckbox').prop('checked', $(this).prop('checked'));
     });
@@ -23,7 +23,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: '/api/users',
+            url: '/api/users/Delete',
             type: 'DELETE',
             data: JSON.stringify(selectedRowData),
             contentType: 'application/json',

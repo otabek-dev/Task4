@@ -1,60 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebAppTask4.Areas.Identity.Data;
-using WebAppTask4.Data;
+using WebAppTask4.Models;
+using WebAppTask4.Service;
 
 namespace Task4App.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly UserService _userService;
 
-        public UsersController(AppDbContext context)
+        public UsersController(UserService userService)
         {
-            this._context = context;
+            this._userService = userService;
         }
-
-        // GET: api/<UsersController>
-        [HttpGet]
-        public IEnumerable<AppUser> Get()
-        {
-            return _context.Users;
-        }
-
-        // GET api/<UsersController>/5
-        [HttpGet("{id}")]
-        public AppUser Get(int id)
-        {
-            var user = _context.Users.Find(id);
-            if (user != null)
-                return user;
-
-            return null;
-        }
-
-        //// POST api/<UsersController>
-        //[HttpPost]
-        //public Guid[] Post([FromBody] Guid[] value)
-        //{
-        //    return value;
-        //}
 
         [HttpPost]
         [Route("Block")]
         public async Task<IActionResult> Block([FromBody] string[] guids)
         {
-            foreach (var guid in guids)
-            {
-                var deleteUser = await _context.Users.FindAsync(guid);
-                
-                if (deleteUser != null)
-                {
-                    deleteUser.IsActive = false;
-                }
-            }
-            
-            await _context.SaveChangesAsync();
+            await _userService.BlockUser(guids);
             return Ok();
         }
 
@@ -62,33 +30,16 @@ namespace Task4App.Controllers
         [Route("UnBlock")]
         public async Task<IActionResult> UnBlock([FromBody] string[] guids)
         {
-            foreach (var guid in guids)
-            {
-                var deleteUser = await _context.Users.FindAsync(guid);
-
-                if (deleteUser != null)
-                {
-                    deleteUser.IsActive = true;
-                }
-            }
-
-            await _context.SaveChangesAsync();
+            await _userService.UnBlockUser(guids);
             return Ok();
         }
 
         [HttpDelete]
-        public async Task Delete([FromBody] string[] guids)
+        [Route("Delete")]
+        public async Task<IActionResult> Delete([FromBody] string[] guids)
         {
-            foreach (var guid in guids)
-            {
-                var deleteUser = await _context.Users.FindAsync(guid);
-
-                if (deleteUser != null)
-                {
-                    _context.Users.Remove(deleteUser);
-                }
-            }
-            await _context.SaveChangesAsync();
+            await _userService.DeleteUser(guids);
+            return Ok();
         }
     }
 }
